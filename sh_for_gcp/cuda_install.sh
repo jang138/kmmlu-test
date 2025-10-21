@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # GPU 타입별 CUDA 및 NVIDIA 드라이버 설치 스크립트
-# 사용법: ./cuda_install.sh <l4|t4|v100>
+# 사용법: ./cuda_install.sh <l4|t4|v100|a100>
 # 드라이버 정책: 550-server 계열 통일, 유틸 패키지 포함 설치
 
 GPU_TYPE=${1:-""}
 
 echo "=== GPU 타입별 CUDA 설치 스크립트 (550-server 계열) ==="
-echo "사용법: $0 <l4|t4|v100>"
+echo "사용법: $0 <l4|t4|v100|a100>"
 
 if [ -z "$GPU_TYPE" ]; then
     echo "오류: GPU 타입 인자가 필요합니다."
-    echo "사용법: $0 <l4|t4|v100>"
+    echo "사용법: $0 <l4|t4|v100|a100>"
     exit 1
 fi
 
@@ -32,9 +32,14 @@ case $GPU_TYPE in
         chmod +x cuda_install_v100.sh
         ./cuda_install_v100.sh
         ;;
+    "a100")
+        echo "A100 GPU용 설치를 시작합니다..."
+        chmod +x cuda_install_a100.sh
+        ./cuda_install_a100.sh
+        ;;
     *)
         echo "지원되지 않는 GPU 타입입니다: $GPU_TYPE"
-        echo "사용법: $0 <l4|t4|v100>"
+        echo "사용법: $0 <l4|t4|v100|a100>"
         exit 1
         ;;
 esac
